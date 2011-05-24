@@ -22,14 +22,24 @@
  ******************************************************************************/
 package org.gatein.api;
 
+import java.util.Map;
+
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
 public interface Query
 {
-   public static final Query ALL = new Query(){};
-   public static final Query PAGED = new Query(){};
+   public void addSearchProperty(String propertyName, String pattern);
+   public Map<String, String> getSearchProperties();
    
+   public void setStartElement(int startElement);
+   public int getStartElement();
+   
+   public void setEndElement(int endElement);
+   public int getEndElement();
+   
+   public void setRecursionLevel(int recursionLevel);
+   public int getRecursionLevel();
 }
 

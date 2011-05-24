@@ -22,10 +22,10 @@
  ******************************************************************************/
 package org.gatein.api.application;
 
+import java.util.Iterator;
+
 import org.gatein.api.GateIn;
-import org.gatein.api.Iterator;
 import org.gatein.api.Portal;
-import org.gatein.api.Query;
 import org.gatein.api.application.repository.PortletRepository;
 
 /**
@@ -40,25 +40,34 @@ public class PortletRepositoryTestCase
    
    public void testGetPortlet()
    {
-      PortletRepository portletRepo = appRegistry.getApplicationRepository().getPortletRepository();
-      
-      Portlet.ID portletID = Portlet.ID.generateID("applicationName", "portletName");
-      Portlet portlet = portletRepo.getPortlet(portletID);
+      PortletRepository portletRepo = appRegistry.getPortletRepository("test");
+      Portlet portlet = portletRepo.getPortlet("appA", "portletB");
       //TODO: actual test
    }
    
    public void testGetPortletsPerApplication()
    {
-      PortletRepository portletRepo = appRegistry.getApplicationRepository().getPortletRepository();
-      Iterator portlets = portletRepo.getPortlets("applicationName");
+      PortletRepository portletRepo = appRegistry.getPortletRepository("test");
+      Iterator<Portlet> portlets = portletRepo.getPortlets("appA");
+      //TODO: actual test
+   }
+   
+   public void testGetApplication()
+   {
+      PortletRepository portletRepo = appRegistry.getPortletRepository("test");
+      Iterator<String> applicationNames = portletRepo.getApplications();
       //TODO: actual test
    }
    
    public void testGetPortlets()
    {
-      PortletRepository portletRepo = appRegistry.getApplicationRepository().getPortletRepository();
-      Iterator portlets = portletRepo.getPortlets(Query.ALL);
-      //TODO: actual test
+      PortletRepository portletRepo = appRegistry.getPortletRepository("test");
+      Iterator<String> applicationNames = portletRepo.getApplications();
+      while (applicationNames.hasNext())
+      {
+         Iterator<Portlet> portlets = portletRepo.getPortlets(applicationNames.next());
+         //TODO: actual test
+      }
    }
    
 }

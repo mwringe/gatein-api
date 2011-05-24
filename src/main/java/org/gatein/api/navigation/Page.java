@@ -20,18 +20,47 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA         *
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.                   *
  ******************************************************************************/
-package org.gatein.api.application;
+package org.gatein.api.navigation;
 
-import org.gatein.api.application.repository.GadgetRepository;
-import org.gatein.api.application.repository.PortletRepository;
+import java.util.Iterator;
+
+import org.gatein.api.application.Application;
+import org.gatein.api.navigation.page.layout.Container;
+import org.gatein.api.permissions.AccessPermissions;
+import org.gatein.api.permissions.EditPermissions;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
-public interface ApplicationRepository
+public interface Page extends Container
 {
-   public GadgetRepository getGadgetRepository();
-   public PortletRepository getPortletRepository();
+   public ID getPageId();
+   public String getOwnerType();
+   public String getOwnerId();
+   public String getPageName();
+   
+   public String getPageTitle();
+   public void setPageTitle();
+   
+   public boolean isShowMaxWindow();
+   public void setShowMaxWindow(boolean showMaxWindow);
+   
+   public AccessPermissions getAccessPermissions();
+   public EditPermissions getEditPermissions();
+   
+   
+   public class ID
+   {
+      private ID(String name, String ownerType, String ownerId)
+      {
+         
+      }
+      
+      public static ID generateId(String name, String ownerType, String ownerId)
+      {
+         return new ID(name, ownerType, ownerId);
+      }
+   }
 }
 

@@ -23,6 +23,8 @@
 package org.gatein.api;
 
 import org.gatein.api.application.ApplicationRegistry;
+import org.gatein.api.navigation.NodeManager;
+import org.gatein.api.navigation.PageManager;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
@@ -31,5 +33,7 @@ import org.gatein.api.application.ApplicationRegistry;
 public interface Portal
 {
    public ApplicationRegistry getApplicationRegistry();
+   public PageManager getPageManager();
+   public NodeManager getNodeManager();
 }
 

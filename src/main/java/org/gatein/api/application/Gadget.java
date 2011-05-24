@@ -22,27 +22,29 @@
  ******************************************************************************/
 package org.gatein.api.application;
 
+import javax.naming.OperationNotSupportedException;
+
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
 public interface Gadget extends Application
-{
+{  
+   //TODO: getName?
+   public String getGadgetName();
    
+   public String getContent();
+   //NOTE: throw exception if this is a remote gadget or this gadget doesn't support this option
+   public void setContent(String content) throws OperationNotSupportedException;
    
-   public static class ID extends Application.ID
-   {
-      String gadgetName;
-      
-      private ID(String gadgetName)
-      {
-         this.gadgetName = gadgetName;
-      }
-      
-      public static ID generateID(String gadgetName)
-      {
-         return new ID(gadgetName);
-      }
-   }
+   //NOTE: see google gadget api
+   //TODO: determine what exactly needs to go here.
+   //NOTE: things like descriptions are part of the ModulePrefs
+   public String getModulePreference(String preference);
+   public String getUserPreference(String preference);
+     
+   //TODO: have a separate RemoteGadget class?
+   public boolean isRemote();
+   
 }
 

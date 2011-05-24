@@ -22,9 +22,13 @@
  ******************************************************************************/
 package org.gatein.api.application;
 
-import org.gatein.api.AccessPermissions;
+import java.util.Iterator;
+
 import org.gatein.api.GateIn;
 import org.gatein.api.Portal;
+import org.gatein.api.application.repository.GadgetRepository;
+import org.gatein.api.application.repository.PortletRepository;
+import org.gatein.api.permissions.AccessPermissions;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
@@ -36,58 +40,61 @@ public class CategoryTestCase
    Portal portal = ((GateIn)null).getPortal();
    ApplicationRegistry appRegistry = portal.getApplicationRegistry();
    
-   public void testGetManagedPortlet()
+   public void testGetPortlet()
    {
       Category category = appRegistry.getCategory("categoryA");
-
-      Application.ID appID = Portlet.ID.generateID("appName", "portletName");
-      ManagedApplication managedApplication = category.getManagedApplication("aPortlet", appID);
-      //TODO: actual test
-   }
-
-   public void testDeleteManagedPortlet()
-   {
-      Category category = appRegistry.getCategory("categoryA");
-
-      Application.ID appID = Portlet.ID.generateID("appName", "portletName");
-      category.deleteManagedApplication("aPortlet", appID);
+      Application application = category.getApplication("portletA");
+      Portlet portlet = (Portlet)application;
       //TODO: actual test
    }
    
-   public void testCreateManagedPortlet()
+   public void testDeletePortlet()
    {
       Category category = appRegistry.getCategory("categoryA");
-
-      Application.ID appID = Portlet.ID.generateID("appName", "portletName");
-      ManagedApplication managedApplication = category.createManagedApplication("aPortlet", appID);
+      category.deleteApplication("portletA");
       //TODO: actual test
    }
    
-   public void testGetManagedGadget()
+   public void testAddPortlet()
    {
       Category category = appRegistry.getCategory("categoryA");
       
-      Application.ID appID = Gadget.ID.generateID("gadget_name");
-      ManagedApplication managedApplication = category.getManagedApplication("aGadget", appID);
-      //TODO: actual test
-   }
- 
-   public void testDeleteManagedGadget()
-   {
-      Category category = appRegistry.getCategory("categoryA");
-      
-      Application.ID appID = Gadget.ID.generateID("gadget_name");
-      category.deleteManagedApplication("aGadget", appID);
+      PortletRepository portletRepository = appRegistry.getPortletRepository(PortletRepository.LOCAL);
+      Application portlet = portletRepository.getPortlet("applicationA", "portletC");
+      Application managedPortlet = category.addApplication("portletB", portlet);
       //TODO: actual test
    }
    
-   public void testCreateManagedGadget()
+   public void testGetGadget()
+   {
+      Category category = appRegistry.getCategory("categoryA");
+      Application application = category.getApplication("gadgetA");
+      Gadget gadget = (Gadget)application;
+      //TODO: actual test
+   }
+   
+   public void testDeleteGadget()
+   {
+      Category category = appRegistry.getCategory("categoryA");
+      category.deleteApplication("gadgetA");
+      //TODO: actual test
+   }
+   
+   public void testAddGadget()
    {
       Category category = appRegistry.getCategory("categoryA");
       
-      Application.ID appID = Gadget.ID.generateID("gadget_name");
-      ManagedApplication managedApplication = category.createManagedApplication("aGadget", appID);
+      GadgetRepository gadgetRepository = appRegistry.getGadgetRepository();
+      Application gadget = gadgetRepository.getGadget("gadgetB");
+      Application managedPortlet = category.addApplication("gadgetB", gadget);
       //TODO: actual test
+   }
+   
+   public void testGetApplications()
+   {
+      Category category = appRegistry.getCategory("categoryA");
+      Iterator<Application> applications = category.getApplications();
+      //TODO: actual tests
    }
    
    public void testGetAccessPermissions()

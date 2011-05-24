@@ -20,14 +20,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA         *
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.                   *
  ******************************************************************************/
-package org.gatein.api;
+package org.gatein.api.navigation;
+
+import java.util.Date;
+import java.util.Iterator;
+
+import org.gatein.api.Icon;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
-public class AccessPermissions
+public interface Node
 {
-
+   public String getName();
+   
+   //TODO: do we need to expose the URI for a node?
+   public String getURI();
+   
+   public String getLabel();
+   public void setLabel(String label);
+   
+   public Page getPage();
+   public void setPage(Page page);
+   
+   public Iterator<Node> getNodes(int level);
+   
+   public boolean isVisible();
+   public void setVisible(boolean visible);
+   
+   public Date getStartPublicationDate();
+   public void setStartPublicationDate(Date stateDate);
+   
+   public Date getEndPublicationDate();
+   public void setEndPublicationDate(Date endDate);
+   
+   public Icon getIcon();
+   public void setIcon(Icon icon);
 }
 

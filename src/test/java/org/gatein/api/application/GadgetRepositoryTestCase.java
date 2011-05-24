@@ -22,6 +22,13 @@
  ******************************************************************************/
 package org.gatein.api.application;
 
+import java.net.URI;
+import java.util.Iterator;
+
+import org.gatein.api.GateIn;
+import org.gatein.api.Portal;
+import org.gatein.api.application.repository.GadgetRepository;
+
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
@@ -29,5 +36,44 @@ package org.gatein.api.application;
 public class GadgetRepositoryTestCase
 {
 
+   Portal portal = ((GateIn)null).getPortal();
+   ApplicationRegistry appRegistry = portal.getApplicationRegistry();
+   
+   public void testGetGadget()
+   {
+      GadgetRepository gadgetRepo = appRegistry.getGadgetRepository();
+      Gadget gadget = gadgetRepo.getGadget("gadgetA");
+      //TODO: actual test
+   }
+   
+   public void testGetGadgets()
+   {
+      GadgetRepository gadgetRepo = appRegistry.getGadgetRepository();
+      Iterator<Gadget> gadgets = gadgetRepo.getGadgets();
+      //TODO: actual test
+   }
+   
+   public void testDeleteGadget()
+   {
+      GadgetRepository gadgetRepo = appRegistry.getGadgetRepository();
+      gadgetRepo.deleteGadget("gadgetA");
+      //TODO: actual test
+   }
+   
+   public void testCreateGadget()
+   {
+      GadgetRepository gadgetRepo = appRegistry.getGadgetRepository();
+      Gadget gadget = gadgetRepo.createGadget("gadgetB", "<?xml version=....");
+      //TODO: actual test
+   }
+   
+   public void testAddRemoteGadget() throws Exception
+   {
+      GadgetRepository gadgetRepo = appRegistry.getGadgetRepository();
+      URI gadgetURI = new URI("file:///path/to/a/gadget/xml.file");
+      Gadget gadget = gadgetRepo.addGadget(gadgetURI);
+      //TODO: actual test
+   }
+   
 }
 

@@ -22,10 +22,10 @@
  ******************************************************************************/
 package org.gatein.api.application.repository;
 
-import org.gatein.api.Iterator;
-import org.gatein.api.Query;
+import java.net.URI;
+import java.util.Iterator;
+
 import org.gatein.api.application.Gadget;
-import org.gatein.api.application.RemoteGadget;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
@@ -33,11 +33,13 @@ import org.gatein.api.application.RemoteGadget;
  */
 public interface GadgetRepository
 {
-   public Gadget getGadget(Gadget.ID gadgetID);
-   public void deleteGadget(Gadget.ID gadgetID);
-   public Iterator getGadgets(Query query);
+   public Gadget getGadget(String name);
+   public void deleteGadget(String name);
    
-   public RemoteGadget addRemoteGadget(RemoteGadget.ID remoteGadgetID);
-   public Gadget createGadget(Gadget.ID gadgetID);
+   //public Iterator<Gadget> getGadgets(Query query);
+   public Iterator<Gadget> getGadgets();
+   
+   public Gadget addGadget(URI gadgetURI);
+   public Gadget createGadget(String name, String content);
 }
 

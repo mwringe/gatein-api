@@ -22,8 +22,9 @@
  ******************************************************************************/
 package org.gatein.api.application;
 
-import org.gatein.api.Iterator;
-import org.gatein.api.Query;
+import java.util.Iterator;
+import org.gatein.api.application.repository.GadgetRepository;
+import org.gatein.api.application.repository.PortletRepository;
 import org.gatein.api.exceptions.AlreadyExistsException;
 
 /**
@@ -33,10 +34,24 @@ import org.gatein.api.exceptions.AlreadyExistsException;
 public interface ApplicationRegistry
 {
    public Category getCategory(String categoryName);
-   public Category createCategory(String categoryName) throws AlreadyExistsException;
-   public void deleteCategory(String categoryName);
-   public Iterator getCategories(Query query);
    
-   public ApplicationRepository getApplicationRepository();
+   //TODO: behaviour of create when it already exists. Should we throw an error or just return the previously created object?
+   public Category createCategory(String categoryName) throws AlreadyExistsException;
+   
+   public void deleteCategory(String categoryName);
+   public Iterator getCategories();
+   
+   //TODO: maybe figure out a better way to handle the 'repository' situation?
+   public PortletRepository getPortletRepository(String name); // ie name=local/self/...
+   // assumes we don't have a lot of different portlet repositories available, so no need to use a query object
+   public Iterator<PortletRepository> getPortletRepositories();
+   
+   public GadgetRepository getGadgetRepository();
+   
+   //TODO: have something like importAllApplications() like what we have in the GUI?
+   
+   //TODO: have methods here to directly access what portlet/gadgets can be retrieved? Or force user to go through all
+   // categories searching for things? For example, the dashboard needs access to a list of categories which only contain gadgets...
+   //public Iterator getApplications(Query query);
 }
 

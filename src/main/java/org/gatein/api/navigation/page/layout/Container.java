@@ -20,19 +20,26 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA         *
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.                   *
  ******************************************************************************/
-package org.gatein.api.application;
+package org.gatein.api.navigation.page.layout;
+
+import java.util.Iterator;
+
+import org.gatein.api.application.Application;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
-public interface RemoteGadget extends Application
+public interface Container
 {
-
-   public static class ID extends Application.ID
-   {
-      
-   }
+   public Iterator<Container> getContainers(int level);
+   public Container getContainer(String containerName);
+   public Container addContainer(Container container);
+   public void deleteContainer(String containerName);
    
+   public Iterator<Application> getApplications();
+   public Application getApplication(String name);
+   public Application addApplication(Application application);
+   public void deleteApplication(String applicationId);
 }
 

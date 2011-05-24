@@ -28,11 +28,13 @@ package org.gatein.api.application;
  */
 public interface Application
 {
-
-   public abstract class ID
-   {
-      
-   }
+   public String getName();
+   
+   //identifier for the application which is added on a page
+   public String getApplicationID();
+   
+   public String getDisplayName();
+   public void setDisplayName(String displayName);
    
 }
 

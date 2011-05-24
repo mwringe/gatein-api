@@ -22,9 +22,8 @@
  ******************************************************************************/
 package org.gatein.api.application;
 
-import org.gatein.api.AccessPermissions;
-import org.gatein.api.Iterator;
-import org.gatein.api.Query;
+import java.util.Iterator;
+import org.gatein.api.permissions.AccessPermissions;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
@@ -32,12 +31,18 @@ import org.gatein.api.Query;
  */
 public interface Category
 {
-   public ManagedApplication getManagedApplication(String name, Application.ID id);
-   public void deleteManagedApplication(String name, Application.ID id);
-   public ManagedApplication createManagedApplication(String name, Application.ID id); 
-   public Iterator getManagedApplications(Query query);
+   public Application getApplication(String name);
+   
+   public void deleteApplication(String name);
+   
+   //NOTE: the returned application is _not_ the same object as the one passed. The returned application
+   // should be mostly a clone of the passed application (but maybe slightly different, eg the name passed may change something like the display-name).
+   public Application addApplication(String name, Application application); 
+   
+   public Iterator<Application> getApplications();
    
    public AccessPermissions getAccessPermissions();
+   //NOTE: no setAcessPermissions, we need to modify the object returned above.
    
    public String getDisplayName();
    public void setDisplayName(String displayName);

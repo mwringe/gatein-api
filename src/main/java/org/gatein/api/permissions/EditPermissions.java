@@ -20,42 +20,17 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA         *
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.                   *
  ******************************************************************************/
-package org.gatein.api.application;
-
-import org.gatein.api.AccessPermissions;
+package org.gatein.api.permissions;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
-public interface ManagedApplication
+public class EditPermissions
 {
-   public Application.ID getApplicationID();
+   //NOTE: should we have two class for Edit and Access, or just use one for both?
+   // - there are implementation details which might make this needed, ..
    
-   public AccessPermissions getAccessPermissions();
-   
-   public String getDisplayName();
-   public void setDisplayName(String displayName);
-   
-   public String getDescription();
-   public void setDescription(String description);
-
-   
-   public class ID
-   {
-      Application.ID applicationID;
-      String name;
-      
-      private ID(String name, Application.ID applicationID)
-      {
-         this.name = name;
-         this.applicationID = applicationID;
-      }
-      
-      public static final ID generateID(String name, Application.ID applicationID)
-      {
-         return new ID(name, applicationID);
-      }
-   }
-   
+   //TODO: implement this later
 }
+

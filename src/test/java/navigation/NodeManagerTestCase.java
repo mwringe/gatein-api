@@ -20,73 +20,42 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA         *
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.                   *
  ******************************************************************************/
-package org.gatein.api.application;
-
-import java.util.Iterator;
+package navigation;
 
 import org.gatein.api.GateIn;
 import org.gatein.api.Portal;
-import org.gatein.api.application.repository.GadgetRepository;
-import org.gatein.api.application.repository.PortletRepository;
+import org.gatein.api.navigation.Node;
+import org.gatein.api.navigation.NodeManager;
+import org.gatein.api.navigation.Page;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
-public class ApplicationRegistryTestCase
+public class NodeManagerTestCase
 {
-
    Portal portal = ((GateIn)null).getPortal();
    
-   public void testGetCategory()
+   public void testGetRootNode()
    {
-      ApplicationRegistry appRegistry = portal.getApplicationRegistry();
-      Category category = appRegistry.getCategory("categoryA");
+      Node root = portal.getNodeManager().getRootNode();
       //TODO: actual test
    }
    
-   public void testDeleteCategory()
+   public void testGetRootNodePage()
    {
-      ApplicationRegistry appRegistry = portal.getApplicationRegistry();
-      appRegistry.deleteCategory("categoryA");
+      Node root = portal.getNodeManager().getRootNode();
+      Page rootPage = root.getPage();
       //TODO: actual test
    }
    
-   public void testAddCategory()
+   public void testGetNode()
    {
-      ApplicationRegistry appRegistry = portal.getApplicationRegistry();
-      Category category = appRegistry.createCategory("newCategory");
-      //TODO: actual test
+      NodeManager nodeManager = portal.getNodeManager();
+      
+     Node node = nodeManager.getNode("/home/testA/testB/testC");
+     //TODO: actual test
    }
    
-   public void testGetCategories()
-   {
-      ApplicationRegistry appRegistry = portal.getApplicationRegistry();
-      Iterator<Category> iterator = appRegistry.getCategories();
-      //TODO: actual test
-   }
-   
-   public void testGetGadgetRepository()
-   {
-      ApplicationRegistry appRegistry = portal.getApplicationRegistry();
-      GadgetRepository gadgetRepo = appRegistry.getGadgetRepository();
-      //TODO: actual test
-   }
-   
-   public void testGetPortletRepositories()
-   {
-      ApplicationRegistry appRegistry = portal.getApplicationRegistry();
-      Iterator<PortletRepository> portletRepositories = appRegistry.getPortletRepositories();
-      //TODO: actual test
-   }
-   
-   public void testGetPortletRepository()
-   {
-      ApplicationRegistry appRegistry = portal.getApplicationRegistry();
-      PortletRepository portletRepository = appRegistry.getPortletRepository("test");
-      //TODO: actual test
-   }
-   
-   //TODO: add more application repository tests here
 }
 

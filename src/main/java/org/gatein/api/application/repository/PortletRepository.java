@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.gatein.api.application.repository;
 
-import org.gatein.api.Iterator;
-import org.gatein.api.Query;
+import java.util.Iterator;
+
 import org.gatein.api.application.Portlet;
 
 /**
@@ -32,12 +32,14 @@ import org.gatein.api.application.Portlet;
  */
 public interface PortletRepository
 {
-   //TODO: do we really need a portlet ID here? or would it be easier to just pass two strings?
-   public Portlet getPortlet(Portlet.ID portletID);
-   public Portlet getPortlet(String applicationName, String portletName);
+   public static String LOCAL = "local";
    
-   public Iterator getPortlets(String applicationName);
-   public Iterator getPortlets(Query query);
-   public Iterator getApplications();
+   public Portlet getPortlet(String applicationName, String portletName);  
+   
+   //returns list of portlets for a particular application
+   public Iterator<Portlet> getPortlets(String applicationName);
+   
+   //returns list of available applications
+   public Iterator<String> getApplications();
 }
 
