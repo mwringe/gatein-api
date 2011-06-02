@@ -22,6 +22,8 @@
  ******************************************************************************/
 package org.gatein.api;
 
+import java.util.Iterator;
+
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$

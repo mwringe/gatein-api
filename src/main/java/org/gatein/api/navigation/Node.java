@@ -24,8 +24,9 @@ package org.gatein.api.navigation;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
-import org.gatein.api.Icon;
+import org.gatein.api.navigation.id.NodeId;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
@@ -33,29 +34,47 @@ import org.gatein.api.Icon;
  */
 public interface Node
 {
+   public NodeId getNodeID();
+   
    public String getName();
    
-   //TODO: do we need to expose the URI for a node?
-   public String getURI();
-   
    public String getLabel();
-   public void setLabel(String label);
    
    public Page getPage();
-   public void setPage(Page page);
-   
-   public Iterator<Node> getNodes(int level);
-   
-   public boolean isVisible();
-   public void setVisible(boolean visible);
    
    public Date getStartPublicationDate();
-   public void setStartPublicationDate(Date stateDate);
-   
    public Date getEndPublicationDate();
+   
+   /**
+    * Returns the child nodes for this particular node.
+    * 
+    * The level determine how many levels of child nodes should be retrieved.
+    * 
+    * a level of 1 means return only the child nodes without their nodes populated (ie children nodes only)
+    * a level of 2 means return the child nodes with only their child nodes populated (ie children plus grandchildren nodes)
+    * 
+    * a level of -1 will return all nodes
+    * 
+    * @param level How many levels of child nodes to fetch
+    * @return the child nodes
+    */
+   public List<Node> getNodes(int level);
+   
+   /*
+    * NOTE: excluded for the first version of the api
+    * 
+   public void setLabel(String label);
+   public void setPage(Page page);
+
+   public boolean isVisible();
+   public void setVisible(boolean visible);
+
+   public void setStartPublicationDate(Date stateDate);
+
    public void setEndPublicationDate(Date endDate);
    
    public Icon getIcon();
    public void setIcon(Icon icon);
+   */
 }
 

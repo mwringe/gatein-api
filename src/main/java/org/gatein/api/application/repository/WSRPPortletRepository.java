@@ -20,14 +20,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA         *
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.                   *
  ******************************************************************************/
-package org.gatein.api.navigation.page.layout;
+package org.gatein.api.application.repository;
+
+import java.util.Iterator;
+
+import org.gatein.api.application.Portlet;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
-public interface AutofitColumn extends Container
+public interface WSRPPortletRepository
 {
-
+   public Portlet getPortlet(String invokerName, String portletName);  
+   
+   public Iterator<Portlet> getPortlets(String invokerName);
+   
+   //returns list of available invokers
+   public Iterator<String> getInvokerNames();
 }
 

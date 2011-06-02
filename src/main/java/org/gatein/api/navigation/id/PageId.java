@@ -20,14 +20,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA         *
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.                   *
  ******************************************************************************/
-package org.gatein.api;
+package org.gatein.api.navigation.id;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
-public class ViewPermissions
+public class PageId
 {
-   //TODO: implement this later
+
 }
 

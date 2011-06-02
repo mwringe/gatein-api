@@ -25,7 +25,7 @@ package org.gatein.api.navigation;
 import java.util.Iterator;
 
 import org.gatein.api.application.Application;
-import org.gatein.api.navigation.page.layout.Container;
+import org.gatein.api.navigation.id.PageId;
 import org.gatein.api.permissions.AccessPermissions;
 import org.gatein.api.permissions.EditPermissions;
 
@@ -33,34 +33,19 @@ import org.gatein.api.permissions.EditPermissions;
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
-public interface Page extends Container
+public interface Page
 {
-   public ID getPageId();
+   public PageId getPageId();
    public String getOwnerType();
    public String getOwnerId();
    public String getPageName();
    
    public String getPageTitle();
-   public void setPageTitle();
-   
-   public boolean isShowMaxWindow();
-   public void setShowMaxWindow(boolean showMaxWindow);
    
    public AccessPermissions getAccessPermissions();
    public EditPermissions getEditPermissions();
    
-   
-   public class ID
-   {
-      private ID(String name, String ownerType, String ownerId)
-      {
-         
-      }
-      
-      public static ID generateId(String name, String ownerType, String ownerId)
-      {
-         return new ID(name, ownerType, ownerId);
-      }
-   }
+   //NOTE: this is meant for the first iteration of the api, so features and functionality
+   // have been deliberately removed.
 }
 

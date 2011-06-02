@@ -22,9 +22,13 @@
  ******************************************************************************/
 package org.gatein.api;
 
+import java.util.Iterator;
+
 import org.gatein.api.application.ApplicationRegistry;
-import org.gatein.api.navigation.NodeManager;
+import org.gatein.api.navigation.Node;
+import org.gatein.api.navigation.Page;
 import org.gatein.api.navigation.PageManager;
+import org.gatein.api.navigation.id.NodeId;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
@@ -32,8 +36,46 @@ import org.gatein.api.navigation.PageManager;
  */
 public interface Portal
 {
+   /**
+    * Retrieves the ApplicationRegistry for this particular portal
+    * 
+    * @return the ApplicationRegistry
+    */
    public ApplicationRegistry getApplicationRegistry();
+   
+   /**
+    * Retrieves the PageManager for this particular portal
+    * 
+    * @return the PageManager
+    */
    public PageManager getPageManager();
-   public NodeManager getNodeManager();
+
+
+   /**
+    * Return a node based on the path of the node.
+    * 
+    * getNode() will return the root node
+    * getNode("childA") will return the node named 'childA' of the root node
+    * getNode("childA", "nodeB") will return the node named 'nodeB' of the child node 'childA' of the root node.
+    * ...
+    * 
+    * @param node The node path
+    * @return The node
+    */
+   public Node getNode(String... node);
+   // NOTE: creating/deleting nodes happens at the Node level, not here
+   
+   /**
+    * Returns a node based on the nodes id.
+    * 
+    * @param id the id of the node to retrieve
+    * @return the node with the specified id
+    */
+   public Node getNode(NodeId id);
+   
+   /**
+    * NOTE: having two methods to retrieve nodes is a bit of a compromise. Its feels more natural to use
+    * paths, but paths can change if a node has been moved.
+    */
 }
 

@@ -23,12 +23,13 @@
 package navigation;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.gatein.api.GateIn;
 import org.gatein.api.Portal;
 import org.gatein.api.navigation.Node;
-import org.gatein.api.navigation.NodeManager;
 import org.gatein.api.navigation.Page;
+import org.testng.Assert;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
@@ -38,51 +39,43 @@ public class NodeTestCase
 {
 
    Portal portal = ((GateIn)null).getPortal();
-   NodeManager nodeManager = portal.getNodeManager();
    
-   public void testGetURI()
+   public void testGetNode()
    {
-      Node node = nodeManager.getNode("foo/bar");
-      String nodeURI = node.getURI();
+      Node node = portal.getNode("foo", "bar");
+      Assert.assertNotNull(node);
       //TODO: actual test
    }
    
    public void testGetPage()
    {
-      Node node = nodeManager.getNode("foo/bar");
+      Node node = portal.getNode("foo", "bar");
+      Assert.assertNotNull(node);
       Page nodePage = node.getPage();
+      Assert.assertNotNull(nodePage);
       //TODO: actual test
    }
-   
-   public void testSetPage()
-   {
-      Node node = nodeManager.getNode("foo/bar2");
-      
-      Page.ID pageId = Page.ID.generateId("name", "ownerType", "ownerId");
-      Page page = portal.getPageManager().getPage(pageId);
-      
-      node.setPage(page);
-      //TODO: actual test
-   }
-   
+
    public void testGetAllNodes()
    {
-      Node node = nodeManager.getNode("bar/foo1");
-      Iterator<Node> nodes = node.getNodes(-1);
+      Node node = portal.getNode("bar", "foo1");
+      List<Node> nodes = node.getNodes(-1);
+      Assert.assertNotNull(nodes);
+      Assert.assertFalse(nodes.isEmpty());
       //TODO: actual test
    }
    
    public void testGetChildNodes()
    {
-      Node node = nodeManager.getNode("bar/foo1");
-      Iterator<Node> nodes = node.getNodes(1);
+      Node node = portal.getNode("bar", "foo1");
+      List<Node> nodes = node.getNodes(1);
       //TODO: actual test
    }
    
    public void testGetChildrendndGrandChildrenNodes()
    {
-      Node node = nodeManager.getNode("bar/foo1");
-      Iterator<Node> nodes = node.getNodes(2);
+      Node node = portal.getNode("bar", "foo1");
+      List<Node> nodes = node.getNodes(2);
       //TODO: actual test
    }
    

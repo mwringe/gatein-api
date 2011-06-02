@@ -20,26 +20,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA         *
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.                   *
  ******************************************************************************/
-package org.gatein.api.navigation.page.layout;
+package org.gatein.api.application;
 
-import java.util.Iterator;
-
-import org.gatein.api.application.Application;
+import org.gatein.api.permissions.AccessPermissions;
 
 /**
+ * A managed application is an application which can be managed in the portal environment.
+ * 
+ * This class wraps around an application object, which should be considered a more abstract, raw type
+ * application. Since an application can be a portlet, gadget or something else entirely, we need a common
+ * way to deal with them in the portal environment.
+ * 
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
-public interface Container
+public interface ManagedApplication
 {
-   public Iterator<Container> getContainers(int level);
-   public Container getContainer(String containerName);
-   public Container addContainer(Container container);
-   public void deleteContainer(String containerName);
+   public Application getApplication();
    
-   public Iterator<Application> getApplications();
-   public Application getApplication(String name);
-   public Application addApplication(Application application);
-   public void deleteApplication(String applicationId);
+   //TODO; change this to support i18n
+   public String getDisplayName();
+   public void setDisplayName(String name);
+   
+   //TOOD; change this to support i18n
+   public String getDescription();
+   public void setDescription(String description);
+   
+   public AccessPermissions getAccessPermissions();
 }
 

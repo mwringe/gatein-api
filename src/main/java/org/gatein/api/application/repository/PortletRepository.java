@@ -31,15 +31,13 @@ import org.gatein.api.application.Portlet;
  * @version $Revision$
  */
 public interface PortletRepository
-{
-   public static String LOCAL = "local";
-   
+{  
    public Portlet getPortlet(String applicationName, String portletName);  
    
    //returns list of portlets for a particular application
    public Iterator<Portlet> getPortlets(String applicationName);
    
    //returns list of available applications
-   public Iterator<String> getApplications();
+   public Iterator<String> getApplicationNames();
 }
 

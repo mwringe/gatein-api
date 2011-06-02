@@ -22,13 +22,16 @@
  ******************************************************************************/
 package org.gatein.api.application;
 
-import java.util.Iterator;
+import java.util.List;
 
 import org.gatein.api.GateIn;
 import org.gatein.api.Portal;
 import org.gatein.api.application.repository.GadgetRepository;
 import org.gatein.api.application.repository.PortletRepository;
+import org.gatein.api.application.repository.WSRPPortletRepository;
+import org.gatein.api.exceptions.AlreadyExistsException;
 import org.gatein.api.permissions.AccessPermissions;
+import org.testng.Assert;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
@@ -40,44 +43,147 @@ public class CategoryTestCase
    Portal portal = ((GateIn)null).getPortal();
    ApplicationRegistry appRegistry = portal.getApplicationRegistry();
    
+   public void testGetCategory()
+   {
+      Category category = appRegistry.getCategory("categoryA");
+      Assert.assertNotNull(category);
+      
+      Assert.assertEquals(category.getName(), "categoryA");
+      Assert.assertEquals(category.getDisplayName(), "displayNameA");
+      Assert.assertEquals(category.getDescription(), "descriptionA");
+      
+      AccessPermissions accessPermissions = category.getAccessPermissions();
+      Assert.assertNotNull(accessPermissions);
+      //TODO: add more checks on the accessPermissions object
+      
+      List<ManagedApplication> managedApplications = category.getManagedApplications();
+      Assert.assertEquals(managedApplications.size(), 4);
+      //TODO: add more checks on the returned ManagedApplications
+   }
+   
+   public void testModifyCategory()
+   {
+      Category category = appRegistry.getCategory("categoryB");
+      Assert.assertNotNull(category);
+      
+      Assert.assertEquals(category.getName(), "categoryB");
+      Assert.assertEquals(category.getDisplayName(), "displayNameB");
+      category.setDisplayName("someOtherDisplayName");
+      Assert.assertEquals(appRegistry.getCategory("categoryB").getDisplayName(), "someOtherDisplayName");
+      
+      Assert.assertEquals(category.getDescription(), "descriptionB");
+      category.setDescription("someOtherDescription");
+      Assert.assertEquals(appRegistry.getCategory("categoryB").getDescription(), "someOtherDescription");
+      
+      AccessPermissions accessPermissions = category.getAccessPermissions();
+      Assert.assertNotNull(accessPermissions);
+      //TODO: modify the accessPermissions object and check that it gets properly updated
+   }
+   
+   public void testGetManagedApplication()
+   { 
+      Category category = appRegistry.getCategory("categoryA");
+      
+      ManagedApplication application = category.getManagedApplication("portletA");
+      
+      Assert.assertNotNull(application);
+   }
+   
    public void testGetPortlet()
    {
       Category category = appRegistry.getCategory("categoryA");
-      Application application = category.getApplication("portletA");
-      Portlet portlet = (Portlet)application;
-      //TODO: actual test
+      ManagedApplication application = category.getManagedApplication("portletA");
+      
+      if (application.getApplication() instanceof Portlet)
+      {
+         Portlet portlet = (Portlet)application.getApplication();
+         //TODO: add checks on the returned portlet
+      }
+      else
+      {
+         Assert.fail("Expected the application to be a gadget.");
+      }
    }
    
    public void testDeletePortlet()
    {
       Category category = appRegistry.getCategory("categoryA");
-      category.deleteApplication("portletA");
-      //TODO: actual test
+      category.deleteManagedApplication("portletA");
+      
+      Assert.assertNull(category.getManagedApplication("portletA"));
+      Assert.assertNull(appRegistry.getCategory("categoryA").getManagedApplication("portletA"));
    }
    
    public void testAddPortlet()
    {
       Category category = appRegistry.getCategory("categoryA");
       
-      PortletRepository portletRepository = appRegistry.getPortletRepository(PortletRepository.LOCAL);
+      PortletRepository portletRepository = appRegistry.getPortletRepository();
       Application portlet = portletRepository.getPortlet("applicationA", "portletC");
-      Application managedPortlet = category.addApplication("portletB", portlet);
-      //TODO: actual test
+      ManagedApplication managedPortlet = category.addManagedApplication("portletB", portlet);
+      
+      Assert.assertNotNull(category.getManagedApplication("portletB"));
+      Assert.assertNotNull(appRegistry.getCategory("categoryA").getManagedApplication("portletB"));
+      
+      //TODO: check that the properties of the returned portlet.
+      
+      try
+      {
+         category.addManagedApplication("portletB", portlet);
+         Assert.fail();
+      }
+      catch (AlreadyExistsException e)
+      {
+         //expected
+      }
+   }
+   
+   public void testAddWSRPPortlet()
+   {
+      Category category = appRegistry.getCategory("categoryA");
+      
+      WSRPPortletRepository portletRepository = appRegistry.getWSRPPortletRepository();
+      Application portlet = portletRepository.getPortlet("invokerC", "portletC");
+      ManagedApplication managedPortlet = category.addManagedApplication("portletB", portlet);
+      
+      Assert.assertNotNull(category.getManagedApplication("portletB"));
+      Assert.assertNotNull(appRegistry.getCategory("categoryA").getManagedApplication("portletB"));
+      
+      //TODO: check that the properties of the returned portlet.
+      
+      try
+      {
+         category.addManagedApplication("portletB", portlet);
+         Assert.fail();
+      }
+      catch (AlreadyExistsException e)
+      {
+         //expected
+      }
    }
    
    public void testGetGadget()
    {
       Category category = appRegistry.getCategory("categoryA");
-      Application application = category.getApplication("gadgetA");
-      Gadget gadget = (Gadget)application;
-      //TODO: actual test
+      ManagedApplication application = category.getManagedApplication("gadgetA");
+      if (application.getApplication() instanceof Gadget)
+      {
+         Gadget gadget = (Gadget)application.getApplication();
+         //TODO: adds checks on returned gadget
+      }
+      else
+      {
+         Assert.fail("Expected the application to be a gadget");
+      }
    }
    
    public void testDeleteGadget()
    {
       Category category = appRegistry.getCategory("categoryA");
-      category.deleteApplication("gadgetA");
-      //TODO: actual test
+      category.deleteManagedApplication("gadgetA");
+      
+      Assert.assertNull(category.getManagedApplication("gadgetA"));
+      Assert.assertNull(appRegistry.getCategory("categoryA").getManagedApplication("gadgetA"));
    }
    
    public void testAddGadget()
@@ -86,15 +192,21 @@ public class CategoryTestCase
       
       GadgetRepository gadgetRepository = appRegistry.getGadgetRepository();
       Application gadget = gadgetRepository.getGadget("gadgetB");
-      Application managedPortlet = category.addApplication("gadgetB", gadget);
-      //TODO: actual test
-   }
-   
-   public void testGetApplications()
-   {
-      Category category = appRegistry.getCategory("categoryA");
-      Iterator<Application> applications = category.getApplications();
-      //TODO: actual tests
+      ManagedApplication managedGadget = category.addManagedApplication("gadgetB", gadget);
+      
+      Assert.assertNotNull(category.getManagedApplication("gadgetB"));
+      Assert.assertNotNull(appRegistry.getCategory("categoryA").getManagedApplication("gadgetB"));
+      
+      //TODO: perform checks on the created gadget
+      
+      try
+      {
+         category.addManagedApplication("gadgetB", gadget);
+      }
+      catch (AlreadyExistsException e)
+      {
+         //expected
+      }
    }
    
    public void testGetAccessPermissions()

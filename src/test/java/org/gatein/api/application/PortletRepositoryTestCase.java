@@ -27,6 +27,8 @@ import java.util.Iterator;
 import org.gatein.api.GateIn;
 import org.gatein.api.Portal;
 import org.gatein.api.application.repository.PortletRepository;
+import org.gatein.api.application.repository.WSRPPortletRepository;
+import org.testng.Assert;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
@@ -40,34 +42,57 @@ public class PortletRepositoryTestCase
    
    public void testGetPortlet()
    {
-      PortletRepository portletRepo = appRegistry.getPortletRepository("test");
+      PortletRepository portletRepo = appRegistry.getPortletRepository();
       Portlet portlet = portletRepo.getPortlet("appA", "portletB");
+      
+      Assert.assertNotNull(portlet);
       //TODO: actual test
    }
    
    public void testGetPortletsPerApplication()
    {
-      PortletRepository portletRepo = appRegistry.getPortletRepository("test");
+      PortletRepository portletRepo = appRegistry.getPortletRepository();
       Iterator<Portlet> portlets = portletRepo.getPortlets("appA");
       //TODO: actual test
    }
-   
+
    public void testGetApplication()
    {
-      PortletRepository portletRepo = appRegistry.getPortletRepository("test");
-      Iterator<String> applicationNames = portletRepo.getApplications();
+      PortletRepository portletRepo = appRegistry.getPortletRepository();
+      Iterator<String> applicationNames = portletRepo.getApplicationNames();
       //TODO: actual test
    }
    
    public void testGetPortlets()
    {
-      PortletRepository portletRepo = appRegistry.getPortletRepository("test");
-      Iterator<String> applicationNames = portletRepo.getApplications();
+      PortletRepository portletRepo = appRegistry.getPortletRepository();
+      Iterator<String> applicationNames = portletRepo.getApplicationNames();
       while (applicationNames.hasNext())
       {
          Iterator<Portlet> portlets = portletRepo.getPortlets(applicationNames.next());
          //TODO: actual test
       }
+   }
+   
+   public void testGetWSRPPortlet()
+   {
+      WSRPPortletRepository portletRepo = appRegistry.getWSRPPortletRepository();
+      Portlet portlet = portletRepo.getPortlet("invokerName", "portletB");
+      
+      Assert.assertNotNull(portlet);
+      //TODO: actual test
+   }
+   
+   public void testGetWSRPPortletsPerInvoker()
+   {
+      WSRPPortletRepository portletRepo = appRegistry.getWSRPPortletRepository();
+      Iterator<Portlet> portlet = portletRepo.getPortlets("invokerName");
+   }
+   
+   public void testGetWSRPInvokerNames()
+   {
+      WSRPPortletRepository portletRepo = appRegistry.getWSRPPortletRepository();
+      Iterator<String> invokerNames = portletRepo.getInvokerNames();
    }
    
 }

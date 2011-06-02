@@ -73,17 +73,10 @@ public class ApplicationRegistryTestCase
       //TODO: actual test
    }
    
-   public void testGetPortletRepositories()
-   {
-      ApplicationRegistry appRegistry = portal.getApplicationRegistry();
-      Iterator<PortletRepository> portletRepositories = appRegistry.getPortletRepositories();
-      //TODO: actual test
-   }
-   
    public void testGetPortletRepository()
    {
       ApplicationRegistry appRegistry = portal.getApplicationRegistry();
-      PortletRepository portletRepository = appRegistry.getPortletRepository("test");
+      PortletRepository portletRepositories = appRegistry.getPortletRepository();
       //TODO: actual test
    }
    

@@ -24,6 +24,7 @@ package org.gatein.api.application.repository;
 
 import java.net.URI;
 import java.util.Iterator;
+import java.util.List;
 
 import org.gatein.api.application.Gadget;
 
@@ -36,8 +37,7 @@ public interface GadgetRepository
    public Gadget getGadget(String name);
    public void deleteGadget(String name);
    
-   //public Iterator<Gadget> getGadgets(Query query);
-   public Iterator<Gadget> getGadgets();
+   public List<Gadget> getGadgets();
    
    public Gadget addGadget(URI gadgetURI);
    public Gadget createGadget(String name, String content);

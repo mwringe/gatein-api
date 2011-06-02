@@ -31,7 +31,7 @@ import javax.naming.OperationNotSupportedException;
 public interface Gadget extends Application
 {  
    //TODO: getName?
-   public String getGadgetName();
+   public String getName();
    
    public String getContent();
    //NOTE: throw exception if this is a remote gadget or this gadget doesn't support this option

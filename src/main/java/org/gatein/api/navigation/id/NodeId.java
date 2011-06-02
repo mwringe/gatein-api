@@ -20,26 +20,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA         *
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.                   *
  ******************************************************************************/
-package org.gatein.api;
-
-import java.util.Map;
+package org.gatein.api.navigation.id;
 
 /**
+ * 
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
-public interface Query
+public interface NodeId
 {
-   public void addSearchProperty(String propertyName, String pattern);
-   public Map<String, String> getSearchProperties();
+
    
-   public void setStartElement(int startElement);
-   public int getStartElement();
-   
-   public void setEndElement(int endElement);
-   public int getEndElement();
-   
-   public void setRecursionLevel(int recursionLevel);
-   public int getRecursionLevel();
 }
 

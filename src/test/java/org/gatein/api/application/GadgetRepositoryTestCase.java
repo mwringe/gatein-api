@@ -23,11 +23,13 @@
 package org.gatein.api.application;
 
 import java.net.URI;
-import java.util.Iterator;
+import java.util.List;
 
 import org.gatein.api.GateIn;
 import org.gatein.api.Portal;
 import org.gatein.api.application.repository.GadgetRepository;
+import org.gatein.api.exceptions.AlreadyExistsException;
+import org.testng.Assert;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
@@ -43,28 +45,46 @@ public class GadgetRepositoryTestCase
    {
       GadgetRepository gadgetRepo = appRegistry.getGadgetRepository();
       Gadget gadget = gadgetRepo.getGadget("gadgetA");
-      //TODO: actual test
+      
+      Assert.assertNotNull(gadget);
+      //TODO: add checks on the gadget object
    }
    
    public void testGetGadgets()
    {
       GadgetRepository gadgetRepo = appRegistry.getGadgetRepository();
-      Iterator<Gadget> gadgets = gadgetRepo.getGadgets();
-      //TODO: actual test
+      List<Gadget> gadgets = gadgetRepo.getGadgets();
+      Assert.assertNotNull(gadgets);
+      Assert.assertEquals(gadgets.size(), 5);
+      //TODO: check the values of the expected gadgets
    }
    
    public void testDeleteGadget()
    {
       GadgetRepository gadgetRepo = appRegistry.getGadgetRepository();
       gadgetRepo.deleteGadget("gadgetA");
-      //TODO: actual test
+      
+      Assert.assertNull(gadgetRepo.getGadget("gadgetA"));
    }
    
    public void testCreateGadget()
    {
       GadgetRepository gadgetRepo = appRegistry.getGadgetRepository();
       Gadget gadget = gadgetRepo.createGadget("gadgetB", "<?xml version=....");
-      //TODO: actual test
+      
+      Assert.assertNotNull(gadget);
+      Assert.assertEquals(gadget.getName(), "gadgetB");
+      Assert.assertEquals(gadget.getContent(), "<?xml version=...");
+      //TODO: continue on with this test
+      
+      try
+      {
+         gadgetRepo.createGadget("gadgetB", "some content goes here");
+      }
+      catch (AlreadyExistsException e)
+      {
+         //expected
+      }
    }
    
    public void testAddRemoteGadget() throws Exception
@@ -72,7 +92,10 @@ public class GadgetRepositoryTestCase
       GadgetRepository gadgetRepo = appRegistry.getGadgetRepository();
       URI gadgetURI = new URI("file:///path/to/a/gadget/xml.file");
       Gadget gadget = gadgetRepo.addGadget(gadgetURI);
-      //TODO: actual test
+      
+      Assert.assertNotNull(gadget);
+      Assert.assertEquals(gadget.getName(), "foo");
+      //TODO: continue on with this test
    }
    
 }

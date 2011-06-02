@@ -25,6 +25,7 @@ package org.gatein.api.navigation;
 import java.util.Iterator;
 
 import org.gatein.api.Query;
+import org.gatein.api.navigation.id.PageId;
 
 /**
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
@@ -32,16 +33,24 @@ import org.gatein.api.Query;
  */
 public interface PageManager
 {
-   public enum PageProperty { OWNERTYPE, OWNERID, TITLE};
-   
-   public Page getLayout();
-   
-   public Page createPage(Page.ID pageId);
-   public void deletePage(Page.ID pageId);
-   public Page getPage(Page.ID pageId);
-   
-   public Query createPageQuery();
+   //TODO: we need a way to query pages, not sure exactly how much we need to expose here
+   //mimimum would be to return pages filtered based on owner, title and name
+   //should also be able to query based on more complex requirements
    public Iterator<Page> getPages(Query query);
    
+   public Page getPage(PageId id);
+   
+   /**
+    * NOTE: creating/deleting will be the responsibility of this interface, but not for the first versions of the api.
+    *
+    * public Page createPage(String pageName);
+    * public void deletePage(PageId id);
+    * ...
+    */
+   
+   /**
+    * NOTE: we also need a getLayout() option to retrieve the portal layout. Not sure if this should go
+    * here or in the portal object. Also not for the first version of the api.
+    */
 }
 

@@ -27,14 +27,8 @@ package org.gatein.api.application;
  * @version $Revision$
  */
 public interface Application
-{
-   public String getName();
-   
-   //identifier for the application which is added on a page
-   public String getApplicationID();
-   
-   public String getDisplayName();
-   public void setDisplayName(String displayName);
-   
+{   
+   //NOTE: it would make sense to have access permissions here so we can block access at the application level
+   //public AccessPermission getAccessPermission();
 }
 
